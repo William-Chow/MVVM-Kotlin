@@ -1,3 +1,27 @@
 <resources>
     <string name="app_name">MVVMKotlin</string>
+
+    <!-- Home -->
+    <string name="home">Home Page</string>
+
+    <!-- Home Detail -->
+    <string name="email">Email : </string>
+    <string name="username">Username : </string>
+    <string name="phone">Phone : </string>
+    <string name="website">Web Site : </string>
+
+    <!-- Login -->
+    <string name="login">Login</string>
+    <string name="username_label">Username</string>
+    <string name="password_label">Password</string>
+    <string name="submit_label">Submit</string>
+
+    <string name="username_error">Please enter your username</string>
+    <string name="password_error">Please enter a password</string>
+    <string name="error_invalid_password">Please enter a minimum password of 6 characters</string>
+
+    <!-- Register -->
+    <string name="sign_up">Sign Up</string>
+    <string name="register_label">Register</string>
+    <string name="have_an_account_label">Have an account?</string>
 </resources>
