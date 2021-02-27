@@ -24,7 +24,6 @@ Realm Control App
 
 
         // Check Database Value All the database record, uncomment to view Admin Database
-        
         val admins = realm.where<Admin>().findAll()
         for (admin in admins) {
             Timber.i("Result :: %s + %s + %s", admin.username, admin.password, admin.key)
@@ -32,7 +31,7 @@ Realm Control App
         
   
   
-        // added to delete the db once the activity is created. Only use this if required
+        // added to delete the db once the activity is created. Only use this if required (Clear the Database)
         realm.beginTransaction()
         realm.deleteAll()
         realm.commitTransaction()
