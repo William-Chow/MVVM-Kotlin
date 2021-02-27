@@ -22,9 +22,9 @@ Advanced Features in Future
 
 Realm Control App
         // Check Database Value All the database record, uncomment to view Admin Database
+        
         val admins = realm.where<Admin>().findAll()
         for (admin in admins) {
-            // body of loop
             Timber.i("Result :: %s + %s + %s", admin.username, admin.password, admin.key)
         }
         
