@@ -58,7 +58,7 @@ class Home : AppCompatActivity() {
         }
 
         homeBinding.ivTurnOff.setOnClickListener{
-            Toast.makeText(this, resources.getString(R.string.exit), Toast.LENGTH_LONG).show()
+            Toast.makeText(this, resources.getString(R.string.exit), Toast.LENGTH_SHORT).show()
             handler.postDelayed(
                 { this.finish() },
                 2000

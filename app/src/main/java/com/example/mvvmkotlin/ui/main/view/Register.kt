@@ -7,11 +7,13 @@ import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.example.mvvmkotlin.R
+import com.example.mvvmkotlin.data.model.Admin
 import com.example.mvvmkotlin.databinding.ActivityRegisterBinding
 import com.example.mvvmkotlin.ui.main.viewmodel.LoginViewModel
 import com.example.mvvmkotlin.utils.Utils.Companion.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
 import io.realm.Realm
+import io.realm.kotlin.where
 
 class Register : AppCompatActivity() {
     private lateinit var context: Context
@@ -77,12 +79,12 @@ class Register : AppCompatActivity() {
         }
 
         if (isUsernameValid && isPasswordValid) {
-            clearEditTextField()
             // Login Success
             registerSuccess(
                 registerBinding.etRegisterUsername.text.toString(),
                 registerBinding.etRegisterPassword.text.toString()
             )
+            clearEditTextField()
         }
     }
 
@@ -92,13 +94,24 @@ class Register : AppCompatActivity() {
     }
 
     private fun registerSuccess(username: String, password: String) {
-        loginViewModel.realmStoreData(username, password, realm) // Add Data to Realm Database
-        Snackbar.make(
-            registerBinding.root,
-            resources.getString(R.string.register_success),
-            Snackbar.LENGTH_LONG
-        ).show()
-        handler.postDelayed({ this.finish() }, 2000) // Close Activity after 2 seconds
+        // Check if the object is exist
+        val admin = realm.where<Admin>().equalTo("username", registerBinding.etRegisterUsername.text.toString()).findAll()
+        if(admin.size > 0){
+            registerBinding.etRegisterUsername.requestFocus()
+            Snackbar.make(
+                registerBinding.root,
+                resources.getString(R.string.user_exist_error),
+                Snackbar.LENGTH_LONG
+            ).show()
+        } else {
+            loginViewModel.realmStoreData(username, password, realm) // Add Data to Realm Database
+            Snackbar.make(
+                registerBinding.root,
+                resources.getString(R.string.register_success),
+                Snackbar.LENGTH_LONG
+            ).show()
+            handler.postDelayed({ this.finish() }, 2000) // Close Activity after 2 seconds
+        }
     }
 
     override fun onDestroy() {

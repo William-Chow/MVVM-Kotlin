@@ -1,5 +1,6 @@
 package com.example.mvvmkotlin.ui.main.view
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Paint
 import android.os.Bundle
@@ -10,12 +11,14 @@ import com.debut.countrycodepicker.CountryPicker
 import com.debut.countrycodepicker.data.Country
 import com.debut.countrycodepicker.listeners.CountryCallBack
 import com.example.mvvmkotlin.R
+import com.example.mvvmkotlin.data.model.Admin
 import com.example.mvvmkotlin.databinding.ActivityLoginBinding
 import com.example.mvvmkotlin.ui.main.viewmodel.LoginViewModel
 import com.example.mvvmkotlin.utils.Utils
 import com.example.mvvmkotlin.utils.Utils.Companion.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
 import io.realm.Realm
+import io.realm.kotlin.where
 
 class Login : AppCompatActivity() {
     private lateinit var context: Context
@@ -70,8 +73,17 @@ class Login : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        // Check Database Value All the database record, uncomment to view Admin Database
+        /*
+        val admins = realm.where<Admin>().findAll()
+        for (admin in admins) {
+            // body of loop
+            Timber.i("Result :: %s + %s + %s", admin.username, admin.password, admin.key)
+        }
+         */
     }
 
+    @SuppressLint("TimberArgCount")
     private fun validation() {
         // Check for a valid email address.
         if (loginBinding.etUsername.text?.isEmpty() == true) {
@@ -100,9 +112,20 @@ class Login : AppCompatActivity() {
         }
 
         if (isUsernameValid && isPasswordValid) {
-            clearEditTextField()
+            // realm db validate login account
+            val admin = realm.where<Admin>().equalTo("username", loginBinding.etUsername.text.toString()).equalTo("password", loginBinding.etPassword.text.toString()).findAll()
             // Login Success
-            loginSuccess()
+            if(admin.size == 1) {
+                loginSuccess()
+            } else {
+                // Invalid Login
+                loginBinding.tilUsername.error = resources.getString(R.string.username_login_fail)
+                isUsernameValid = false
+                loginBinding.tilPassword.error = resources.getString(R.string.password_login_fail)
+                isPasswordValid = false
+                loginBinding.etUsername.requestFocus()
+            }
+            clearEditTextField()
         }
     }
 
