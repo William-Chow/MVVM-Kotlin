@@ -3,13 +3,18 @@ package com.example.mvvmkotlin.ui.main.view
 import android.content.Context
 import android.graphics.Paint
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
+import com.debut.countrycodepicker.CountryPicker
+import com.debut.countrycodepicker.data.Country
+import com.debut.countrycodepicker.listeners.CountryCallBack
 import com.example.mvvmkotlin.R
 import com.example.mvvmkotlin.databinding.ActivityLoginBinding
 import com.example.mvvmkotlin.ui.main.viewmodel.LoginViewModel
 import com.example.mvvmkotlin.utils.Utils
 import com.example.mvvmkotlin.utils.Utils.Companion.hideKeyboard
+import com.google.android.material.snackbar.Snackbar
 import io.realm.Realm
 
 class Login : AppCompatActivity() {
@@ -23,6 +28,8 @@ class Login : AppCompatActivity() {
 
     private lateinit var realm: Realm // Database
 
+    private val handler = Handler() // handler
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         loginBinding = ActivityLoginBinding.inflate(layoutInflater)
@@ -30,19 +37,19 @@ class Login : AppCompatActivity() {
         realm = Realm.getDefaultInstance()
 
         context = this@Login // Context
-        loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java) // init ViewModel
+        loginViewModel =
+            ViewModelProviders.of(this).get(LoginViewModel::class.java) // init ViewModel
 
         loginBinding.btnSubmit.setOnClickListener {
-            clearEditTextField()
             hideKeyboard()
             validation()
         }
 
         loginBinding.tvSignUp.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-        loginBinding.tvSignUp.setOnClickListener{
+        loginBinding.tvSignUp.setOnClickListener {
             clearEditTextField()
             // Sign Up
-            Utils.intent(this, Register::class.java)
+            Utils.intentWithoutFinish(this, Register::class.java)
         }
 
         // !!!Dangerous if you want to delete current DB (all)!!!
@@ -51,24 +58,26 @@ class Login : AppCompatActivity() {
         // realm.deleteAll()
         // realm.commitTransaction()
 
-//            CountryPicker.show(supportFragmentManager, object : CountryCallBack {
-//                override fun onCountrySelected(country: Country) {
-//                    Snackbar.make(homeDetailBinding.tvTitle, "Country : ${country.name} and Country Code : ${country.countryCode}",
-//                        Snackbar.LENGTH_LONG).show()
-//                }
-//            })
+        loginBinding.tvCountries.setOnClickListener {
+            CountryPicker.show(supportFragmentManager, object : CountryCallBack {
+                override fun onCountrySelected(country: Country) {
+                    loginBinding.tvCountries.text = country.name
+                    // Snackbar.make(loginBinding.tvCountries, "Country : ${country.name} and Country Code : ${country.countryCode}", Snackbar.LENGTH_LONG).show()
+                }
+            })
+        }
     }
 
     override fun onResume() {
         super.onResume()
     }
 
-    private fun validation(){
+    private fun validation() {
         // Check for a valid email address.
         if (loginBinding.etUsername.text?.isEmpty() == true) {
             loginBinding.tilUsername.error = resources.getString(R.string.username_error)
             isUsernameValid = false
-        } else  {
+        } else {
             isUsernameValid = true
             loginBinding.tilUsername.isErrorEnabled = false
         }
@@ -80,7 +89,8 @@ class Login : AppCompatActivity() {
                 isPasswordValid = false
             }
             loginBinding.etPassword.text!!.length < 6 -> {
-                loginBinding.tilPassword.error = resources.getString(R.string.error_invalid_password)
+                loginBinding.tilPassword.error =
+                    resources.getString(R.string.error_invalid_password)
                 isPasswordValid = false
             }
             else -> {
@@ -90,18 +100,28 @@ class Login : AppCompatActivity() {
         }
 
         if (isUsernameValid && isPasswordValid) {
+            clearEditTextField()
             // Login Success
-            validateLoginSuccess()
+            loginSuccess()
         }
     }
 
-    private fun validateLoginSuccess(){
-        Utils.intent(this, Home::class.java)
+    private fun loginSuccess() {
+        Snackbar.make(
+            loginBinding.root,
+            resources.getString(R.string.login_success),
+            Snackbar.LENGTH_LONG
+        ).show()
+        handler.postDelayed(
+            { Utils.intent(this, Home::class.java) },
+            2000
+        ) // Close Activity after 2 seconds
     }
 
-    private fun clearEditTextField(){
+    private fun clearEditTextField() {
         loginBinding.etUsername.text?.clear()
         loginBinding.etPassword.text?.clear()
+        loginBinding.tvCountries.text = ""
     }
 
     override fun onDestroy() {

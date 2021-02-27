@@ -29,9 +29,15 @@ class Utils {
             activity.startActivity(intent)
         }
 
+        fun <T> intentWithoutFinish(activity: Activity, myClass: Class<T>) {
+            val intent = Intent(activity, myClass)
+            activity.startActivity(intent)
+        }
+
         fun <T> intent(activity: Activity, myClass: Class<T>) {
             val intent = Intent(activity, myClass)
             activity.startActivity(intent)
+            activity.finish()
         }
 
         fun isEmailValid(str: String): Boolean {

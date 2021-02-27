@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_30"
-            android:layout_marginBottom="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_10"
             android:text="@string/login"
             android:textSize="@dimen/text_18"
             android:textStyle="bold|italic" />
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/dimen_20"
-            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginTop="@dimen/dimen_5"
             android:layout_marginEnd="@dimen/dimen_20"
             android:layout_marginBottom="@dimen/dimen_5"
             android:background="@android:color/transparent"
@@ -63,6 +63,30 @@
                 android:inputType="textPassword" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_15"
+            android:layout_marginStart="@dimen/dimen_35"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:layout_marginEnd="@dimen/dimen_20"
+            android:layout_marginBottom="@dimen/dimen_5"
+            android:textStyle="bold"
+            android:text="@string/countries_label"/>
+
+        <TextView
+            android:id="@+id/tvCountries"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_13"
+            android:padding="@dimen/dimen_10"
+            android:background="@color/white"
+            android:layout_marginStart="@dimen/dimen_35"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginEnd="@dimen/dimen_30"
+            android:layout_marginBottom="@dimen/dimen_5"
+            android:hint="@string/countries_hint"/>
 
         <Button
             android:id="@+id/btnSubmit"

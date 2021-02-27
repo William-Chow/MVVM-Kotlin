@@ -77,12 +77,18 @@ class Register : AppCompatActivity() {
         }
 
         if (isUsernameValid && isPasswordValid) {
+            clearEditTextField()
             // Login Success
             registerSuccess(
                 registerBinding.etRegisterUsername.text.toString(),
                 registerBinding.etRegisterPassword.text.toString()
             )
         }
+    }
+
+    private fun clearEditTextField() {
+        registerBinding.etRegisterUsername.text?.clear()
+        registerBinding.etRegisterPassword.text?.clear()
     }
 
     private fun registerSuccess(username: String, password: String) {
