@@ -3,6 +3,7 @@
 
     <!-- Home -->
     <string name="home">Home Page</string>
+    <string name="exit">Exiting</string>
     <string name="back_pressed">Press back again to close this app</string>
 
     <!-- Home Detail -->
