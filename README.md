@@ -21,6 +21,8 @@ Advanced Features in Future
 
 
 Realm Control App
+
+
         // Check Database Value All the database record, uncomment to view Admin Database
         
         val admins = realm.where<Admin>().findAll()
