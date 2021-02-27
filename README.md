@@ -16,3 +16,22 @@ Advanced Features in Future
 - Firebase Login
 - Firebase Google Map
 - App Redesign for Home Page
+
+
+
+
+Realm Control App
+        // Check Database Value All the database record, uncomment to view Admin Database
+        /*
+        val admins = realm.where<Admin>().findAll()
+        for (admin in admins) {
+            // body of loop
+            Timber.i("Result :: %s + %s + %s", admin.username, admin.password, admin.key)
+        }
+         */
+  
+  
+        // realm.beginTransaction()
+        // added to delete the db once the activity is created. Only use this if required
+        // realm.deleteAll()
+        // realm.commitTransaction()
