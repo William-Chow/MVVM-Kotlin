@@ -7,7 +7,9 @@ import android.content.Intent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import com.example.mvvmkotlin.R
 import com.example.mvvmkotlin.data.model.User
+import com.google.android.material.snackbar.Snackbar
 import java.util.regex.Pattern
 
 class Utils {
@@ -56,6 +58,10 @@ class Utils {
         fun Context.hideKeyboard(view: View) {
             val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+
+        fun snackBarCustom(view :View, value: String){
+            Snackbar.make(view, value, Snackbar.LENGTH_LONG).show()
         }
     }
 }

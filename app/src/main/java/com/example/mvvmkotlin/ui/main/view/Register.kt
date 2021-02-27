@@ -11,6 +11,7 @@ import com.example.mvvmkotlin.data.model.Admin
 import com.example.mvvmkotlin.databinding.ActivityRegisterBinding
 import com.example.mvvmkotlin.ui.main.viewmodel.LoginViewModel
 import com.example.mvvmkotlin.utils.Utils.Companion.hideKeyboard
+import com.example.mvvmkotlin.utils.Utils.Companion.snackBarCustom
 import com.google.android.material.snackbar.Snackbar
 import io.realm.Realm
 import io.realm.kotlin.where
@@ -94,22 +95,12 @@ class Register : AppCompatActivity() {
     }
 
     private fun registerSuccess(username: String, password: String) {
-        // Check if the object is exist
-        val admin = realm.where<Admin>().equalTo("username", registerBinding.etRegisterUsername.text.toString()).findAll()
-        if(admin.size > 0){
+        if(loginViewModel.realmValidateUserExist(username, realm) > 0){
             registerBinding.etRegisterUsername.requestFocus()
-            Snackbar.make(
-                registerBinding.root,
-                resources.getString(R.string.user_exist_error),
-                Snackbar.LENGTH_LONG
-            ).show()
+            snackBarCustom(registerBinding.root, resources.getString(R.string.user_exist_error))
         } else {
             loginViewModel.realmStoreData(username, password, realm) // Add Data to Realm Database
-            Snackbar.make(
-                registerBinding.root,
-                resources.getString(R.string.register_success),
-                Snackbar.LENGTH_LONG
-            ).show()
+            snackBarCustom(registerBinding.root, resources.getString(R.string.register_success))
             handler.postDelayed({ this.finish() }, 2000) // Close Activity after 2 seconds
         }
     }

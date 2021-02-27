@@ -19,6 +19,7 @@ import com.example.mvvmkotlin.utils.Utils.Companion.hideKeyboard
 import com.google.android.material.snackbar.Snackbar
 import io.realm.Realm
 import io.realm.kotlin.where
+import timber.log.Timber
 
 class Login : AppCompatActivity() {
     private lateinit var context: Context
@@ -74,13 +75,13 @@ class Login : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         // Check Database Value All the database record, uncomment to view Admin Database
-        /*
+
         val admins = realm.where<Admin>().findAll()
         for (admin in admins) {
             // body of loop
             Timber.i("Result :: %s + %s + %s", admin.username, admin.password, admin.key)
         }
-         */
+
     }
 
     @SuppressLint("TimberArgCount")
@@ -112,10 +113,8 @@ class Login : AppCompatActivity() {
         }
 
         if (isUsernameValid && isPasswordValid) {
-            // realm db validate login account
-            val admin = realm.where<Admin>().equalTo("username", loginBinding.etUsername.text.toString()).equalTo("password", loginBinding.etPassword.text.toString()).findAll()
             // Login Success
-            if(admin.size == 1) {
+            if(loginViewModel.realmValidateCheckingUser(loginBinding.etUsername.text.toString(), loginBinding.etPassword.text.toString(), realm) == 1) {
                 loginSuccess()
             } else {
                 // Invalid Login
@@ -130,11 +129,7 @@ class Login : AppCompatActivity() {
     }
 
     private fun loginSuccess() {
-        Snackbar.make(
-            loginBinding.root,
-            resources.getString(R.string.login_success),
-            Snackbar.LENGTH_LONG
-        ).show()
+        Utils.snackBarCustom(loginBinding.root, resources.getString(R.string.login_success))
         handler.postDelayed(
             { Utils.intent(this, Home::class.java) },
             2000
