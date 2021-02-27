@@ -1,7 +1,12 @@
 package com.example.mvvmkotlin.utils
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.view.View
+import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
 import com.example.mvvmkotlin.data.model.User
 import java.util.regex.Pattern
 
@@ -31,6 +36,20 @@ class Utils {
 
         fun isEmailValid(str: String): Boolean {
             return EMAIL_ADDRESS_PATTERN.matcher(str).matches()
+        }
+
+        fun Fragment.hideKeyboard() {
+            view?.let { activity?.hideKeyboard(it) }
+        }
+
+        fun Activity.hideKeyboard() {
+            hideKeyboard(currentFocus ?: View(this))
+        }
+
+        @SuppressLint("ServiceCast")
+        fun Context.hideKeyboard(view: View) {
+            val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
         }
     }
 }

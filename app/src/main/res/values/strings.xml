@@ -24,4 +24,5 @@
     <string name="sign_up">Sign Up</string>
     <string name="register_label">Register</string>
     <string name="have_an_account_label">Have an account?</string>
+    <string name="register_success">Register Success</string>
 </resources>

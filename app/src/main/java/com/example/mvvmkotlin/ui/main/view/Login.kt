@@ -9,6 +9,7 @@ import com.example.mvvmkotlin.R
 import com.example.mvvmkotlin.databinding.ActivityLoginBinding
 import com.example.mvvmkotlin.ui.main.viewmodel.LoginViewModel
 import com.example.mvvmkotlin.utils.Utils
+import com.example.mvvmkotlin.utils.Utils.Companion.hideKeyboard
 import io.realm.Realm
 
 class Login : AppCompatActivity() {
@@ -17,7 +18,7 @@ class Login : AppCompatActivity() {
 
     private lateinit var loginBinding: ActivityLoginBinding
 
-    private var isEmailValid = false
+    private var isUsernameValid = false
     private var isPasswordValid = false
 
     private lateinit var realm: Realm // Database
@@ -32,11 +33,14 @@ class Login : AppCompatActivity() {
         loginViewModel = ViewModelProviders.of(this).get(LoginViewModel::class.java) // init ViewModel
 
         loginBinding.btnSubmit.setOnClickListener {
+            clearEditTextField()
+            hideKeyboard()
             validation()
         }
 
         loginBinding.tvSignUp.paintFlags = Paint.UNDERLINE_TEXT_FLAG
         loginBinding.tvSignUp.setOnClickListener{
+            clearEditTextField()
             // Sign Up
             Utils.intent(this, Register::class.java)
         }
@@ -55,13 +59,17 @@ class Login : AppCompatActivity() {
 //            })
     }
 
+    override fun onResume() {
+        super.onResume()
+    }
+
     private fun validation(){
         // Check for a valid email address.
         if (loginBinding.etUsername.text?.isEmpty() == true) {
             loginBinding.tilUsername.error = resources.getString(R.string.username_error)
-            isEmailValid = false
+            isUsernameValid = false
         } else  {
-            isEmailValid = true
+            isUsernameValid = true
             loginBinding.tilUsername.isErrorEnabled = false
         }
 
@@ -81,13 +89,23 @@ class Login : AppCompatActivity() {
             }
         }
 
-        if (isEmailValid && isPasswordValid) {
+        if (isUsernameValid && isPasswordValid) {
             // Login Success
             validateLoginSuccess()
         }
     }
 
     private fun validateLoginSuccess(){
+        Utils.intent(this, Home::class.java)
+    }
 
+    private fun clearEditTextField(){
+        loginBinding.etUsername.text?.clear()
+        loginBinding.etPassword.text?.clear()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        realm.close() // close the realm when exit activity
     }
 }

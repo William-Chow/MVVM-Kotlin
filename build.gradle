@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     ext.kotlin_version = "1.4.30"
-    ext.realm_version = '5.10.0'
+    ext.realm_version = '6.1.0'
     repositories {
         google()
         jcenter()

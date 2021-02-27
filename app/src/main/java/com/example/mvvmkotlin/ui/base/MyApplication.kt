@@ -15,10 +15,10 @@ class MyApplication : Application() {
         Realm.init(this)
 
         // Generate a random encryption key
-        val key = ByteArray(64)
-        SecureRandom().nextBytes(key)
+//        val key = ByteArray(64)
+//        SecureRandom().nextBytes(key)
 
-        val config = RealmConfiguration.Builder().name("Admin").schemaVersion(1).deleteRealmIfMigrationNeeded().encryptionKey(key).build()
+        val config = RealmConfiguration.Builder().name("Admin.realm").schemaVersion(1).deleteRealmIfMigrationNeeded().build()
         Realm.setDefaultConfiguration(config)
         // End Realm
 
