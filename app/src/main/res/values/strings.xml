@@ -33,4 +33,6 @@
     <string name="have_an_account_label">Have an account?</string>
     <string name="register_success">Register Success</string>
     <string name="user_exist_error">User is exist, please try another Username…</string>
+
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDaEox_R2wh8gYQQ3pvhJpN_sMaoVVrRAU</string>
 </resources>

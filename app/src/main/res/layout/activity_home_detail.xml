@@ -37,8 +37,8 @@
         android:id="@+id/llContent"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
         android:background="@android:color/darker_gray"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -48,24 +48,24 @@
             android:id="@+id/tvEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_15"
-            android:layout_margin="@dimen/dimen_5"
             android:layout_gravity="center_vertical"
+            android:layout_margin="@dimen/dimen_5"
             android:gravity="center_vertical"
+            android:padding="@dimen/dimen_5"
             android:textColor="@color/black"
-            android:textStyle="bold"
-            android:textSize="@dimen/text_15" />
+            android:textSize="@dimen/text_15"
+            android:textStyle="bold" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvUsername"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_15"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dimen_25"
             android:layout_marginTop="@dimen/dimen_5"
             android:layout_marginEnd="@dimen/dimen_5"
-            android:layout_marginStart="@dimen/dimen_25"
-            android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
+            android:padding="@dimen/dimen_5"
             android:textColor="@color/black"
             android:textSize="@dimen/text_13" />
 
@@ -73,12 +73,25 @@
             android:id="@+id/tvPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_15"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dimen_25"
             android:layout_marginTop="@dimen/dimen_5"
             android:layout_marginEnd="@dimen/dimen_5"
-            android:layout_marginStart="@dimen/dimen_25"
-            android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
+            android:padding="@dimen/dimen_5"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_13" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dimen_25"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginEnd="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dimen_5"
             android:textColor="@color/black"
             android:textSize="@dimen/text_13" />
 
@@ -86,14 +99,35 @@
             android:id="@+id/tvWebSite"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="@dimen/dimen_15"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dimen_25"
             android:layout_marginTop="@dimen/dimen_5"
             android:layout_marginEnd="@dimen/dimen_5"
-            android:layout_marginStart="@dimen/dimen_25"
-            android:layout_gravity="center_vertical"
             android:gravity="center_vertical"
+            android:padding="@dimen/dimen_5"
             android:textColor="@color/black"
             android:textSize="@dimen/text_13" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCompany"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/dimen_25"
+            android:layout_marginTop="@dimen/dimen_5"
+            android:layout_marginEnd="@dimen/dimen_5"
+            android:gravity="center_vertical"
+            android:padding="@dimen/dimen_5"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_13" />
+
+        <fragment xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/dimen_10"
+            tools:context="com.example.wander.MapsActivity" />
 
     </LinearLayout>
 
